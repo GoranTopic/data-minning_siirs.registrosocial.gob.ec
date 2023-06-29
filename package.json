@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/main.js",
-    "master": "node src/main_master.js",
-    "worker": "node src/main_worker.js",
+    "server": "node src/main_server.js",
+    "client": "node src/main_client.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
