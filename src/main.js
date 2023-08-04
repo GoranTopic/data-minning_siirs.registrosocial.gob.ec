@@ -1,56 +1,24 @@
-import slavery from './slavery.js';
-import cluster from 'node:cluster';
-import { availableParallelism } from 'node:os';
+import puppeteer from 'puppeteer';
+import play_captchan_audio from './scripts/play_captchan_audio.js';
+import set_captchan_audio_listener from './listeners/set_captchan_audio_listener.js';
 
-let options = {
-    numberOfSlaves: 10,
-    port: 3003,
-    host: 'localhost',
-}
+let domain = 'https://siirs.registrosocial.gob.ec/pages/publico/busquedaPublica.jsf'
 
-let s = slavery(options);
+// launch puppeteer in headeless mode off and with a proxy
+let browser = await puppeteer.launch({
+    headless: false,
+    args: [ ]
+});
 
+// open a new page
+const page = await browser.newPage();
+await page.goto(domain);
 
+// set listener for captcha audio
+set_captchan_audio_listener(page, async response => {
+    console.log('response from google captcha');
+    console.log(response);
+});
 
-// define the master
-s.master( async master => {
-    // master
-    // console.log('Master is running');
-    // define the master
-    master.on('connected', () => { console.log(`worker is online`) });
-    // recive send event from slave
-    master.on('send', (data) => { 
-        console.log('send event from slave');
-        console.log(data)
-    });
-    // wait for connection
-    await master.untilConnected(9); 
-    // send event to slaves
-    master.emit('send', 'hello from master' );
-    // get slave 
-    let slave = master.getSlaves()[1];
-    // get the return value from slave
-    console.log(slave.return);
-})
-
-// define the slave
-s.slave( async slave => {
-    // define the salve
-    //console.log('print from slave');
-    slave.on('connected', () => console.log(`worker is online`) );
-    console.log('slave is running');
-    await slave.untilConnected();
-    console.log('slave is connected');
-    //slave.emit('send', w => { message: 'hello from slave' });
-    // return
-    return { result: 'huge suceess' };
-})
-
-
-/*
-if (cluster.isPrimary) {
-    console.log(Object.values(cluster.workers).length);
-    console.log(`avialable parallelism: ${availableParallelism()}`);
-}
-*/
-
+// play the audio captcha
+await play_captchan_audio(page);

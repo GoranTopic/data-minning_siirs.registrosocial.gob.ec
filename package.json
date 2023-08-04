@@ -8,16 +8,25 @@
     "start": "node src/main.js",
     "server": "node src/main_server.js",
     "client": "node src/main_client.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/**/*.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
+    "axios": "^1.4.0",
+    "chai-as-promised": "^7.1.1",
+    "dotenv": "^16.3.1",
     "http": "^0.0.1-security",
+    "openai": "^3.3.0",
     "prompt-sync": "^4.2.0",
-    "puppeteer": "^20.7.3",
+    "puppeteer": "^20.9.0",
+    "slavery-js": "^1.0.3",
     "socket.io": "^4.7.0",
-    "socket.io-client": "^4.7.0"
+    "socket.io-client": "^4.7.0",
+    "waiting-for-js": "^1.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
   }
 }
