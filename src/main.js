@@ -12,13 +12,24 @@ let browser = await puppeteer.launch({
 
 // open a new page
 const page = await browser.newPage();
-await page.goto(domain);
+await page.setRequestInterception(true);
 
+
+// set request interception to true
 // set listener for captcha audio
+page.on('request', interceptedRequest => {
+    console.log('intercepted request:' + interceptedRequest.url());
+    interceptedRequest.continue();
+});
+/*
 set_captchan_audio_listener(page, async response => {
     console.log('response from google captcha');
     console.log(response);
 });
+*/
+
+// go to the domain
+await page.goto(domain);
 
 // play the audio captcha
 await play_captchan_audio(page);
