@@ -29,8 +29,11 @@ const captcha_solver = async (page, twoCaptcha_api_key) => {
 	// get captcha id
 	let captchaID = (response.data.includes('OK')) ? response.data.split('|')[1] : null;
 	
-	// if we got a null ID, then we have an error
-	if (captchaID === null) console.error('Error getting captcha ID');
+    // if we got a null ID, then we have an error
+    if (captchaID === null){
+        console.error('Error getting captcha ID');
+        return false;
+    }
 
 	// check if captcha is solved every 5 seconds
 	let captchaToken = null;
