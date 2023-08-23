@@ -1,9 +1,8 @@
-import fs from 'fs';
-import slavery from 'slavery-js';
-import Checklist from 'checklist-js';
 import { chromium } from 'playwright';
 import twoCaptchanSolver from './captchan/twoCaptchanSolver.js';
+import wait from 'waiting-for-js';
 import dotenv from 'dotenv';
+import slavery from 'slavery-js';
 dotenv.config();
 
 // get the enviroment variables
@@ -12,32 +11,22 @@ let domain = 'https://siirs.registrosocial.gob.ec/pages/publico/busquedaPublica.
 
 // launch playwrigth
 const browser = await chromium.launch({
-	headless: false,
+	headless: true,
 	slowMo: 50,
 });
 
 // open a new page
 const page = await browser.newPage();
 
-
-// get cedulas
-let cedulas = fs.readFileSync('./storage/cedulas/cedulas_03.txt', 'utf8').split('\n');
-
-// create checklist
-let ckls = new Checklist(cedulas);
-
-// get new cedula
-let cedula = ckls.next();
-
-// send cedula to slave
-//while (cedula) {
-
+slavery({
+	numberOfSlaves: 1,
+}).slave(async cedula => {
 	// go to the domain
 	await page.goto(domain);
 
 	// salve captchan
 	let result = await twoCaptchanSolver(page, twoCaptchaApiKey);
-	console.log('captcha solved: ', result);
+	console.log('result', result);
 
 	// get text input with id frmBusquedaPublica:txtCedula
 	let textInput = await page.$('#frmBusquedaPublica\\:txtCedula');
@@ -49,14 +38,5 @@ let cedula = ckls.next();
 	await page.click('#frmBusquedaPublica\\:btnBuscar');
 
 	// wait for the page to load
-	await page.waitForLoadState('networkidle');
-
-	// get the text of the table tag
-	let tableText = await page.$('table').innerText();
-	console.log(tableText);
-	// check cedula
-	cedula = ckls.next();
-//}
-
-
-
+	await wait.for.time(2000);
+});

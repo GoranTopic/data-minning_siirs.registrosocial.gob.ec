@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/main.js",
-    "server": "node src/main_server.js",
-    "client": "node src/main_client.js",
+    "master": "node src/master.js",
+    "slave": "node src/slave.js",
     "test": "mocha test/**/*.js"
   },
   "author": "",
@@ -15,12 +15,13 @@
   "dependencies": {
     "axios": "^1.4.0",
     "chai-as-promised": "^7.1.1",
+    "checklist-js": "^1.1.11",
     "dotenv": "^16.3.1",
     "http": "^0.0.1-security",
     "openai": "^3.3.0",
+    "playwright": "^1.37.1",
     "prompt-sync": "^4.2.0",
-    "puppeteer": "^20.9.0",
-    "slavery-js": "^1.0.3",
+    "slavery-js": "^1.3.5",
     "socket.io": "^4.7.0",
     "socket.io-client": "^4.7.0",
     "waiting-for-js": "^1.0.3"
