@@ -4,6 +4,7 @@ import Checklist from 'checklist-js';
 import { chromium } from 'playwright';
 import twoCaptchanSolver from './captchan/twoCaptchanSolver.js';
 import dotenv from 'dotenv';
+import parsteTable from './parser/parseTable.js';
 dotenv.config();
 
 // get the enviroment variables
@@ -54,10 +55,9 @@ while (cedula) {
 
 	ckls.check(cedula);
 	// get the text of the table tag
-	let tableText = await page.$('table')
+	let tableElement = await page.$('table')
 	// get the text of the table tag	
-	tableText = await tableText.innerText();
-
+	let tableText = await tableText.innerText();
 	// if test message containes the message 'Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda'
 	if( tableText
 		.includes('Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda') ) {
@@ -66,7 +66,10 @@ while (cedula) {
 	} else {
 		// save the text of the table tag
 		fs.writeFileSync(`./storage/cedulas/${cedula}.txt`, tableText);
-		break;
+		// check cedula
+		debugger;
+	
+
 	}
 }
 
