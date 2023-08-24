@@ -5,6 +5,12 @@ import wait from 'waiting-for-js';
 
 const captcha_solver = async (page, twoCaptcha_api_key) => {
 
+	// if twoCaptcha_api_key is not defined, then return false
+	if (!twoCaptcha_api_key){
+		console.error('twoCaptcha_api_key is null');
+		return false;
+	}
+
 	// get the domain from the page object
 	const url = page.url();
 
@@ -43,7 +49,7 @@ const captcha_solver = async (page, twoCaptcha_api_key) => {
 		const captchaResponse = await axios.get(`http://2captcha.com/res.php?key=${twoCaptcha_api_key}&action=get&id=${captchaID}`);
 		if (captchaResponse.data.includes('OK')) {
 			captchaToken = captchaResponse.data.split('|')[1];
-			console.log('captchaToken:', captchaToken);
+			//console.log('captchaToken:', captchaToken);
 			break;
 		}
 	}

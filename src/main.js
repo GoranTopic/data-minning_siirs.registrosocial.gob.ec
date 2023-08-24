@@ -29,38 +29,46 @@ let ckls = new Checklist(cedulas);
 let cedula = ckls.next();
 
 // send cedula to slave
-//while (cedula) {
+while (cedula) {
 
-// go to the domain
-await page.goto(domain, { timeout: 1000000 });
+	// go to the domain
+	await page.goto(domain, { timeout: 1000000 });
 
-// salve captchan
-let result = await twoCaptchanSolver(page, twoCaptchaApiKey);
-if(result === false) 
-    throw new Error('captcha not solved');
-else console.log('captcha solved: ', result);
+	// salve captchan
+	let result = await twoCaptchanSolver(page, twoCaptchaApiKey);
+	if(result === false) 
+		throw new Error('captcha not solved');
+	else console.log('captcha solved: ', result);
 
-// get text input with id frmBusquedaPublica:txtCedula
-let textInput = await page.$('#frmBusquedaPublica\\:txtCedula');
+	// get text input with id frmBusquedaPublica:txtCedula
+	let textInput = await page.$('#frmBusquedaPublica\\:txtCedula');
 
-// set the value of the text input
-await textInput.fill(cedula);
+	// set the value of the text input
+	await textInput.fill(cedula);
 
-// click on the submit button with the id frmBusquedaPublica:btnBuscar
-await page.click('#frmBusquedaPublica\\:btnBuscar');
+	// click on the submit button with the id frmBusquedaPublica:btnBuscar
+	await page.click('#frmBusquedaPublica\\:btnBuscar');
 
-// wait for the page to load
-await page.waitForLoadState('networkidle');
+	// wait for the page to load
+	await page.waitForLoadState('networkidle');
 
-debugger;
-// get the text of the table tag
-let tableText = await page.$('table')
-console.log(tableText);
+	ckls.check(cedula);
+	// get the text of the table tag
+	let tableText = await page.$('table')
+	// get the text of the table tag	
+	tableText = await tableText.innerText();
 
-// check cedula
-cedula = ckls.next();
-
-//}
+	// if test message containes the message 'Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda'
+	if( tableText
+		.includes('Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda') ) {
+		// check cedula
+		cedula = ckls.next();
+	} else {
+		// save the text of the table tag
+		fs.writeFileSync(`./storage/cedulas/${cedula}.txt`, tableText);
+		break;
+	}
+}
 
 
 
