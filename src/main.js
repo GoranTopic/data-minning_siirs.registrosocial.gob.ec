@@ -1,5 +1,4 @@
 import fs from 'fs';
-import slavery from 'slavery-js';
 import Checklist from 'checklist-js';
 import { chromium } from 'playwright';
 import twoCaptchanSolver from './captchan/twoCaptchanSolver.js';
@@ -21,14 +20,19 @@ const browser = await chromium.launch({
 // open a new page
 const page = await browser.newPage();
 
+// numeros
+let number = '03';
+
 // get cedulas
-let cedulas = fs.readFileSync('./storage/cedulas/cedulas_03.txt', 'utf8').split('\n');
+let cedulas = fs.readFileSync(`./storage/cedulas/cedulas_${number}.txt`, 'utf8').split('\n');
 
 // open the key value store
-const store = await KeyValueStore.open('siirs');
+const store = await KeyValueStore.open(`siirs_${number}`);
 
 // create checklist
-let ckls = new Checklist(cedulas);
+let ckls = new Checklist(cedulas, { 
+    path: `./storage/checklist/cedulas_${number}`
+});
 
 // get new cedula
 let cedula = ckls.next();
@@ -49,7 +53,6 @@ while (cedula) {
 	if(result === false) 
 		throw new Error('captcha not solved');
 	else console.log('captcha solved: ', result);
-
 
 	// click on the submit button with the id frmBusquedaPublica:btnBuscar
 	await page.click('#frmBusquedaPublica\\:btnBuscar');
