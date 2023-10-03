@@ -1,13 +1,10 @@
 import fs from 'fs';
 import Checklist from 'checklist-js';
 import { chromium } from 'playwright';
-<<<<<<< HEAD
 import captchanSolver from './captchan/captchas.io.js';
-=======
-import twoCaptchanSolver from './captchan/twoCaptchanSolver.js';
 import { KeyValueStore } from 'crawlee';
 import parseTables from './parsers/parseTables.js';
->>>>>>> refs/remotes/origin/master
+
 import dotenv from 'dotenv';
 dotenv.config();
 //import parsteTable from './parser/parseTable.js';
@@ -34,6 +31,9 @@ let cedulas = fs.readFileSync(`./storage/cedulas/cedulas_${number}.txt`, 'utf8')
 // open the key value store
 const store = await KeyValueStore.open(`siirs_${number}`);
 
+// make directory
+fs.mkdirSync(`./storage/checklist/cedulas_${number}`, { recursive: true });
+
 // create checklist
 let ckls = new Checklist(cedulas, { 
     path: `./storage/checklist/cedulas_${number}`
@@ -55,8 +55,7 @@ while (cedula) {
 
 	// salve captchan
 	let result = await captchanSolver(page, twoCaptchaApiKey);
-	if(result === false) 
-		throw new Error('captcha not solved');
+	if(result === false) throw new Error('captcha not solved');
 	else console.log('captcha solved: ', result);
 
 	// click on the submit button with the id frmBusquedaPublica:btnBuscar
@@ -65,27 +64,6 @@ while (cedula) {
 	// wait for the page to load
 	await page.waitForLoadState('networkidle');
 
-<<<<<<< HEAD
-    ckls.check(cedula);
-    // get the text of the table tag
-    let tableElement = await page.$('table')
-    // get the text of the table tag	
-    let tableText = await tableElement.innerText();
-    // if test message containes the message 'Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda'
-    if( tableText
-        .includes('Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda') 
-    ) {
-    } else {
-        // save the text of the table tag
-        //fs.writeFileSync(`./storage/cedulas/${cedula}.txt`, tableText);
-        console.log(tableText);
-        // check cedula
-    }
-    // check cedula
-    ckls.check(cedula);
-    // check cedula
-    cedula = ckls.next();
-=======
 	// get the text of the table tag
 	let tables = await page.$$('table')
 	// get the text of the table tag	
@@ -108,7 +86,6 @@ while (cedula) {
 	console.log('checked: ', cedula);
 	// get new cedula
 	cedula = ckls.next();
->>>>>>> refs/remotes/origin/master
 }
 
 
