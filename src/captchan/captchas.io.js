@@ -3,7 +3,7 @@ import axios from 'axios';
 // waiter
 import wait from 'waiting-for-js';
 
-let checkEvery = 5; // seconds
+let checkEvery = 10; // seconds
 let submitEndpoint = 'https://api.captchas.io/in.php'   
 let checkEndpoint = 'https://api.captchas.io/res.php'
 
@@ -32,15 +32,15 @@ const captcha_solver = async (page, token) => {
 	// get key from src
 	const captchanKey = iframeSrc.split('k=')[1].split('&')[0];
 
-        console.log('querying:', `${submitEndpoint}?key=${token}&googlekey=${captchanKey}&method=userrecaptcha&pageurl=${url}`);
+        //console.log('querying:', `${submitEndpoint}?key=${token}&googlekey=${captchanKey}&method=userrecaptcha&pageurl=${url}`);
 	// get the response from 2captcha
 	let response = await axios.post(`${submitEndpoint}?key=${token}&googlekey=${captchanKey}&method=userrecaptcha&pageurl=${url}`)
 
-    console.log('response:', response.data);
+    //console.log('response:', response.data);
 
 	// get captcha id
 	let captchaID = (response.data.includes('OK')) ? response.data.split('|')[1] : null;
-	console.log('captchaID:', captchaID);
+	//console.log('captchaID:', captchaID);
 	// if we got a null ID, then we have an error
 	if (captchaID === null){
         console.error('Error getting captcha ID');

@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-import twoCaptchanSolver from './captchan/twoCaptchanSolver.js';
+import captchanSolver from './captchan/captchas.io.js';
 import wait from 'waiting-for-js';
 import dotenv from 'dotenv';
 import parseTables from './parsers/parseTables.js';
@@ -7,12 +7,12 @@ import slavery from 'slavery-js';
 dotenv.config();
 
 // get the enviroment variables
-let twoCaptchaApiKey = process.env.TWO_CAPTCHA_API_KEY;
+let captchanKey = process.env.CAPTCHA_SOLVER_API_KEY
 let domain = 'https://siirs.registrosocial.gob.ec/pages/publico/busquedaPublica.jsf'
 
 // launch playwrigth
 const browser = await chromium.launch({
-	headless: false,
+	headless: true,
 	slowMo: 50,
 });
 
@@ -20,7 +20,7 @@ const browser = await chromium.launch({
 const page = await browser.newPage();
 
 slavery({
-	//numberOfSlaves: 2,
+	numberOfSlaves: 25,
 }).slave(async (cedula, salve) => {
 	// go to the domain
 	await page.goto(domain);
@@ -32,8 +32,9 @@ slavery({
 	await textInput.fill(cedula);
 
 	// salve captchan
-	let result = await twoCaptchanSolver(page, twoCaptchaApiKey);
-	console.log(`[${salve.id}] 2captacha result`, result);
+	let result = await captchanSolver(page, captchanKey);
+	if(result === false) throw new Error('captcha not solved');
+	else console.log('captcha solved: ', result);
 
 	// click on the submit button with the id frmBusquedaPublica:btnBuscar
 	await page.click('#frmBusquedaPublica\\:btnBuscar');

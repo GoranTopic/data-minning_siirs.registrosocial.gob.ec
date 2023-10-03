@@ -50,6 +50,7 @@ while (cedula) {
 	// write cedula in search input
 	// get text input with id frmBusquedaPublica:txtCedula
 	let textInput = await page.$('#frmBusquedaPublica\\:txtCedula');
+
 	// set the value of the text input
 	await textInput.fill(cedula);
 
