@@ -2,13 +2,13 @@ import fs from 'fs';
 import slavery from 'slavery-js';
 import Checklist from 'checklist-js';
 import { chromium } from 'playwright';
-import twoCaptchanSolver from './captchan/twoCaptchanSolver.js';
+import captchanSolver from './captchan/captchas.io.js';
 import dotenv from 'dotenv';
-import parsteTable from './parser/parseTable.js';
 dotenv.config();
+//import parsteTable from './parser/parseTable.js';
 
 // get the enviroment variables
-let twoCaptchaApiKey = process.env.TWO_CAPTCHA_API_KEY;
+let twoCaptchaApiKey = process.env.CAPTCHA_SOLVER_API_KEY;
 let domain = 'https://siirs.registrosocial.gob.ec/pages/publico/busquedaPublica.jsf'
 
 // launch playwrigth
@@ -36,7 +36,7 @@ while (cedula) {
 	await page.goto(domain, { timeout: 1000000 });
 
 	// salve captchan
-	let result = await twoCaptchanSolver(page, twoCaptchaApiKey);
+	let result = await captchanSolver(page, twoCaptchaApiKey);
 	if(result === false) 
 		throw new Error('captcha not solved');
 	else console.log('captcha solved: ', result);
@@ -53,24 +53,25 @@ while (cedula) {
 	// wait for the page to load
 	await page.waitForLoadState('networkidle');
 
-	ckls.check(cedula);
-	// get the text of the table tag
-	let tableElement = await page.$('table')
-	// get the text of the table tag	
-	let tableText = await tableText.innerText();
-	// if test message containes the message 'Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda'
-	if( tableText
-		.includes('Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda') ) {
-		// check cedula
-		cedula = ckls.next();
-	} else {
-		// save the text of the table tag
-		fs.writeFileSync(`./storage/cedulas/${cedula}.txt`, tableText);
-		// check cedula
-		debugger;
-	
-
-	}
+    ckls.check(cedula);
+    // get the text of the table tag
+    let tableElement = await page.$('table')
+    // get the text of the table tag	
+    let tableText = await tableElement.innerText();
+    // if test message containes the message 'Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda'
+    if( tableText
+        .includes('Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda') 
+    ) {
+    } else {
+        // save the text of the table tag
+        //fs.writeFileSync(`./storage/cedulas/${cedula}.txt`, tableText);
+        console.log(tableText);
+        // check cedula
+    }
+    // check cedula
+    ckls.check(cedula);
+    // check cedula
+    cedula = ckls.next();
 }
 
 
