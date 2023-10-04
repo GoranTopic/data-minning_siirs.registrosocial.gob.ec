@@ -20,7 +20,7 @@ const browser = await chromium.launch({
 const page = await browser.newPage();
 
 slavery({
-	numberOfSlaves: 25,
+	numberOfSlaves: 50,
 }).slave(async (cedula, salve) => {
 	// go to the domain
 	await page.goto(domain);

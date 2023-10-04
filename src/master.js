@@ -28,6 +28,7 @@ slavery()
                     await store.setValue(cedula, data);
                     // mark cedula as done
                     checklist.check(cedula);
+                    console.log(`cedula ${cedula} checked, ${checklist._values.length}/${checklist.missingLeft()} left`);
                 }).catch( error => {
                     console.log(`${cedula}: `, error);
                 });

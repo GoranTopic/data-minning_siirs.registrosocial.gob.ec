@@ -4,6 +4,7 @@ import axios from 'axios';
 import wait from 'waiting-for-js';
 
 let checkEvery = 10; // seconds
+let timeout = 250; // seconds
 let submitEndpoint = 'https://api.captchas.io/in.php'   
 let checkEndpoint = 'https://api.captchas.io/res.php'
 
@@ -63,6 +64,10 @@ const captcha_solver = async (page, token) => {
 			console.log('captchaToken:', captchaToken);
 			break;
 		}
+        if(timeWaited > timeout) {
+            console.error('Error getting captcha token');
+            return false
+        }
 	}
 
 	// make the id g-recaptcha-response visible
