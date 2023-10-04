@@ -20,6 +20,8 @@ const browser = await chromium.launch({
 const page = await browser.newPage();
 
 slavery({
+    host: '192.168.50.239',
+    port : 3000,
 	numberOfSlaves: 50,
 }).slave(async (cedula, salve) => {
 	// go to the domain

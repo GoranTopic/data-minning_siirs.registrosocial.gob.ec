@@ -3,7 +3,10 @@ import slavery from 'slavery-js';
 import Checklist from 'checklist-js';
 import { KeyValueStore } from 'crawlee';
 
-slavery()
+slavery({
+    host: '192.168.50.239',
+    port : 3000,
+})
     .master(async master => {
         // number
         let number = '03';
