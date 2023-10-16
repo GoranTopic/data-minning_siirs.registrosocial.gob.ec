@@ -1,15 +1,20 @@
-FROM ghcr.io/puppeteer/puppeteer:latest
+FROM node:19
 
-# root user to be able to access ount directory
-USER root
+# Create app directory
+WORKDIR /usr/src/app
 
-WORKDIR supercias
-# pass our own package.json
-COPY package.json package.json
-COPY options.json options.json
-COPY src/ src/
-# install files 
-RUN npm install 
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-# works with this command
-#docker run -it --init --cap-add=SYS_ADMIN -v /home/telix/supercias/data/:/home/pptruser/supercias/data supercias_image npm run companies
+RUN npm install
+
+# Bundle app source
+COPY . .
+
+VOLUME storage
+
+EXPOSE 3030
+
+CMD [ "npm", "run", "start" ]

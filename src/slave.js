@@ -12,7 +12,7 @@ let domain = 'https://siirs.registrosocial.gob.ec/pages/publico/busquedaPublica.
 slavery({
     host: 'localhost', // '192.168.50.239',
     port : 3000,
-    numberOfSlaves: 1
+    numberOfSlaves: 50,
 }).slave( {
     'browser': async (proxy, slave ) => {
         let browser = slave.get('browser');
@@ -23,8 +23,8 @@ slavery({
         console.log('making browser');
         // launch playwrigth
         browser = await chromium.launch({
-            headless: false,
-            //proxy: { server: 'http://' + proxy }
+            headless: true,
+            proxy: { server: 'http://' + proxy }
         });
         // open a new page
         let page = await browser.newPage();
@@ -60,7 +60,11 @@ slavery({
             .includes('Usted no consta en el Registro Social, en los próximos meses el Registro Social visitará su vivienda') ) {
             // return empty object
             data = 'no consta en el registro social';
-        } else {
+        } else if( tableText
+            .includes('Para conocer si te encuentras registrado en la base de datos del Registro Social, ingresa tu n_mero de c_dula') ) {
+            // return empty object
+            throw new Error('captcha not solved');
+        }else {
             // get the data from the page
             data = await parseTables(tables);
         }
