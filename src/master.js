@@ -28,7 +28,7 @@ slavery({
         let slave = await master.getIdle();
         // set up browser if it was not set up
         let hasBrowser = await slave.has_done('browser');
-        if(!hasBrowser || slave['count'] > 5) {
+        if(!hasBrowser || slave['count'] > 2) {
             console.log('setting up browser');
             slave.run( proxies.next(), 'browser')
             slave['count'] = 0;

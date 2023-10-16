@@ -15,18 +15,23 @@ slavery({
     numberOfSlaves: 1
 }).slave( {
     'browser': async (proxy, slave ) => {
+        let browser = slave.get('browser');
+        if(browser) {
+            console.log('closing browser');
+            await browser.close();
+        }
         console.log('making browser');
         // launch playwrigth
-        const browser = await chromium.launch({
+        browser = await chromium.launch({
             headless: false,
             //proxy: { server: 'http://' + proxy }
         });
         // open a new page
-        const page = await browser.newPage();
+        let page = await browser.newPage();
         
         // page on the slave
+        slave.set('browser', browser)
         slave.set('page', page)
-
     },
     'cedula': async (cedula, slave) => {
         // get the page from the slave
