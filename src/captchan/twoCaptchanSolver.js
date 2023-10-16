@@ -109,7 +109,6 @@ const captcha_solver = async (page, twoCaptcha_api_key) => {
 }
 
 
-
 export default captcha_solver;
 
 

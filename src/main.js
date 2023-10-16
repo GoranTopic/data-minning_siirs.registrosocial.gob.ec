@@ -1,9 +1,11 @@
 import fs from 'fs';
 import Checklist from 'checklist-js';
 import { chromium } from 'playwright';
+//import captchanSolver from './captchan/captchas.io.exploit.js';
 import captchanSolver from './captchan/captchas.io.js';
 import { KeyValueStore } from 'crawlee';
 import parseTables from './parsers/parseTables.js';
+import generateToken from './utils/generateToken.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -19,8 +21,14 @@ const browser = await chromium.launch({
 	slowMo: 50,
 });
 
+// make a new context
+let context = await browser.newContext()
+
+// get the context request
+let contextRequets = context.request;
+
 // open a new page
-const page = await browser.newPage();
+const page = await context.newPage();
 
 // numeros
 let number = '03';
@@ -59,8 +67,8 @@ while (cedula) {
 	if(result === false) throw new Error('captcha not solved');
 	else console.log('captcha solved: ', result);
 
-	// click on the submit button with the id frmBusquedaPublica:btnBuscar
-	await page.click('#frmBusquedaPublica\\:btnBuscar');
+// click on the submit button with the id frmBusquedaPublica:btnBuscar
+await page.click('#frmBusquedaPublica\\:btnBuscar');
 
 	// wait for the page to load
 	await page.waitForLoadState('networkidle');
@@ -82,12 +90,42 @@ while (cedula) {
 		// save data
 		await store.setValue(cedula, data);
 	}
+
 	// check cedula
 	ckls.check(cedula);
 	console.log('checked: ', cedula);
 	// get new cedula
 	cedula = ckls.next();
+
 }
+
+// this code was my attpemt to find if the captcha was being checked on the server side
+/* 
+    let fakeToken = generateToken();
+	console.log('fake captcha token:', fakeToken);
+
+
+let javax_faces_ViewState = await page.evaluate( () => 
+    document.getElementById("j_id1:javax.faces.ViewState:0").value
+);
+
+console.log('javax_faces_ViewState: ', javax_faces_ViewState);
+
+//
+let response = await contextRequets.post(domain, {
+    'rmBusquedaPublica': 'frmBusquedaPublica',
+    'frmBusquedaPublica:txtCedula': '0300550316',
+    'g-recaptcha-response': fakeToken,
+    'frmBusquedaPublica:btnBuscar': '',
+    'javax.faces.ViewState': javax_faces_ViewState,
+})
+let body = await response.body();
+console.log('response: ', body.toString());
+
+*/
+
+
+
 
 
 
