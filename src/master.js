@@ -9,17 +9,25 @@ slavery({
     port : 3000,
 }).master(async master => {
     // number
-    let number = '03';
+    
+    let cedula_prefix = process.argv[2];
+    // let get the phone number from the params passed
+    console.log('reading cedulas starting with: ', cedula_prefix);
+    if(!cedula_prefix){
+        console.log('Please enter a number from 01 - 24 or 30');
+        process.exit(1);
+    }
+
     // create proxy rotator
     let proxies = new ProxyRotator( './storage/proxies/proxyscrape_premium_http_proxies.txt');
     // read cedulas
-    let cedulas = fs.readFileSync(`./storage/cedulas/cedulas_${number}.txt`, 'utf8').split('\n');
+    let cedulas = fs.readFileSync(`./storage/cedulas/cedulas_${cedula_prefix}.txt`, 'utf8').split('\n');
     // open the key value store
-    const store = await KeyValueStore.open(`siirs_${number}`);
+    const store = await KeyValueStore.open(`siirs_${cedula_prefix}`);
     // create checklist
     let checklist = new Checklist(cedulas, { 
         path: `./storage/checklists/`,
-        name: `cedulas_${number}`
+        name: `cedulas_${cedula_prefix}`
     });
     // get new cedula
     let cedula = checklist.next();
