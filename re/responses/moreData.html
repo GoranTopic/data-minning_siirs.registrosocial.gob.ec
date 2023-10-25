@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition>
+<html lang="es" xml:lang="es" xmlns="http://www.w3.org/1999/xhtml"><head id="j_idt2"><link type="text/css" rel="stylesheet" href="/javax.faces.resource/theme.css.jsf?ln=primefaces-aristo" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/components.css.jsf?ln=primefaces&amp;v=8.0" /><script type="text/javascript" src="/javax.faces.resource/jquery/jquery.js.jsf?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/jquery/jquery-plugins.js.jsf?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/core.js.jsf?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/components.js.jsf?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/watermark/watermark.js.jsf?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/captcha/captcha.js.jsf?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/touch/touchswipe.js.jsf?ln=primefaces&amp;v=8.0"></script><link type="text/css" rel="stylesheet" href="/javax.faces.resource/./css/template2/defecto.css.jsf" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/./css/template2/menu_1.css.jsf" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/./css/template2/boton.css.jsf" /><script type="text/javascript" src="/javax.faces.resource/validation/validation.js.jsf?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/validation/beanvalidation.js.jsf?ln=primefaces&amp;v=8.0"></script><script type="text/javascript">if(window.PrimeFaces){PrimeFaces.settings.locale='es_EC';PrimeFaces.settings.validateEmptyFields=true;PrimeFaces.settings.considerEmptyStringNull=false;}</script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+        <link rel="shortcut icon" href="/resources/img/favicon.ico" />
+        <!--&lt;script src="{request.contextPath}/resources/js/template2/jquery.js"
+                type="text/javascript" /&gt;-->
+        <script src="/resources/js/template2/menu.js" type="text/javascript"></script>
+        <script src="/resources/js/template2/navegacion.js" type="text/javascript"></script>
+
+
+        <title>SIIRS</title></head><body>
+    <div id="bannerPrincipal">
+        <div style="padding: 15px;"><img src="/resources/img/Logo.png" />
+            <div style="float: right; text-align: right;">
+<form id="j_idt12" name="j_idt12" method="post" action="/pages/publico/busquedaPublica.jsf" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt12" value="j_idt12" />
+
+        <nav id="menu">
+            <ul class="center">
+                <li><a href="/index.jsf">Inicio</a></li>
+                <li><a href="https://ventanilla.registrosocial.gob.ec" target="_blank">Ventanilla Virtual</a></li>
+                 <li><a href="http://certificadodigital.registrosocial.gob.ec" target="_blank">Certificado Digital</a></li>
+                        <li><a href="/pages/publico/busquedaPublica.jsf">Consulta tu RS</a></li>
+                        <li><a href="/pages/publico/usuariosINEC.jsf">Encuestadores</a></li>
+                        <li><a href="/pages/publico/requerimiento.jsf">Sugerencias</a></li>
+                        <li><a href="/pages/publico/contacto.jsf">Contáctenos</a></li>
+                        <li><a href="/pages/publico/normativa.jsf">Descargas</a></li>
+                        <li><a href="/pages/login.jsf">Sesión</a></li>
+            </ul>
+        </nav><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="3195813043666579893:8883228287248158843" autocomplete="off" />
+</form>
+                <div class="slider-content">
+                    <div class="spinner-master">
+                        <div class="spinner2 diagonal part-1"></div>
+                        <div class="spinner2 horizontal"></div>
+                        <div class="spinner2 diagonal part-2"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+       	<!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Main -->
+            <div id="main">
+                <div class="inner">
+
+                    <!-- Header -->
+                    <header id="header">
+                    </header>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+        <script>
+            function verificarSiCaptcha(response) {
+
+                var response = grecaptcha.getResponse();
+                var botonConsulta = document.getElementById('frmBusquedaPublica:btnBuscar');
+                PF('frmBusquedaPublica:btnBuscar').disable();
+                if (response.length == 0) {
+                    botonConsulta.disabled = true;
+                } else {
+                    botonConsulta.disabled = false;
+                }
+            }
+            window.onload = function () {
+                verificarSiCaptcha();
+            };
+
+        </script>
+<form id="frmBusquedaPublica" name="frmBusquedaPublica" method="post" action="/pages/publico/busquedaPublica.jsf" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="frmBusquedaPublica" value="frmBusquedaPublica" />
+
+            <section>
+                <div class="row">
+                        <div class="12u 12u$(small)"><div id="frmBusquedaPublica:j_idt87" class="ui-panel ui-widget ui-widget-content ui-corner-all" style="width: 100%; background: #f2f2f2;" data-widget="widget_frmBusquedaPublica_j_idt87"><div id="frmBusquedaPublica:j_idt87_content" class="ui-panel-content ui-widget-content"><table id="frmBusquedaPublica:j_idt88" class="ui-panelgrid ui-widget sinbordes" role="grid"><tbody><tr class="ui-widget-content ui-panelgrid-even" role="row"><td role="gridcell" class="ui-panelgrid-cell" colspan="2">
+                                            <header id="header"><span class="labelContenido" style="font-weight:600 !important;"> Sra. DELGADO  MARIA ROCIO DE LOS ANGELES con cédula 0400558862, Usted consta en el Registro Social.</span>
+                                            </header></td></tr>
+                                    <br /><tr class="ui-widget-content ui-panelgrid-odd" role="row"><td role="gridcell" class="ui-panelgrid-cell" style="width:25%;"><span class="labelContenido">Certificado:</span></td><td role="gridcell" class="ui-panelgrid-cell" style="width:75%;"><span class="textoResultado">7245545</span></td></tr><tr class="ui-widget-content ui-panelgrid-even" role="row"><td role="gridcell" class="ui-panelgrid-cell"><span class="labelContenido">Provincia:</span></td><td role="gridcell" class="ui-panelgrid-cell"><span class="textoResultado">PICHINCHA</span></td></tr><tr class="ui-widget-content ui-panelgrid-odd" role="row"><td role="gridcell" class="ui-panelgrid-cell"><span class="labelContenido">Cantón:</span></td><td role="gridcell" class="ui-panelgrid-cell"><span class="textoResultado">QUITO</span></td></tr><tr class="ui-widget-content ui-panelgrid-even" role="row"><td role="gridcell" class="ui-panelgrid-cell"><span class="labelContenido">Parroquia:</span></td><td role="gridcell" class="ui-panelgrid-cell"><span class="textoResultado">TUMBACO</span></td></tr><tr class="ui-widget-content ui-panelgrid-odd" role="row"><td role="gridcell" class="ui-panelgrid-cell"><span class="labelContenido">Fecha entrevista:</span></td><td role="gridcell" class="ui-panelgrid-cell"><span class="textoResultado">23/09/2022</span></td></tr></tbody></table>
+                                    <br /><span class="labelContenido" style="font-weight:600 !important;">Datos de la familia</span>
+                                    <br />
+                                    <br /><div id="frmBusquedaPublica:j_idt127" class="ui-datatable ui-widget" style="width: 100% !important"><div class="ui-datatable-tablewrapper"><table role="grid" style="table-layout: auto;                                          white-space: nowrap;font-size: 10pt !important;"><thead id="frmBusquedaPublica:j_idt127_head"><tr role="row"><th id="frmBusquedaPublica:j_idt127:j_idt128" class="ui-state-default" role="columnheader" aria-label="Núcleo" scope="col" style="text-align:center;"><span class="ui-column-title">Núcleo</span></th><th id="frmBusquedaPublica:j_idt127:j_idt130" class="ui-state-default" role="columnheader" aria-label="Apellidos" scope="col"><span class="ui-column-title">Apellidos</span></th><th id="frmBusquedaPublica:j_idt127:j_idt132" class="ui-state-default" role="columnheader" aria-label="Nombres" scope="col"><span class="ui-column-title">Nombres</span></th><th id="frmBusquedaPublica:j_idt127:j_idt134" class="ui-state-default" role="columnheader" aria-label="Cédula" scope="col" style="text-align:center;"><span class="ui-column-title">Cédula</span></th><th id="frmBusquedaPublica:j_idt127:j_idt136" class="ui-state-default" role="columnheader" aria-label="Edad" scope="col" style="text-align:center;"><span class="ui-column-title">Edad</span></th><th id="frmBusquedaPublica:j_idt127:j_idt138" class="ui-state-default" role="columnheader" aria-label="Parentesco" scope="col"><span class="ui-column-title">Parentesco</span></th><th id="frmBusquedaPublica:j_idt127:j_idt140" class="ui-state-default" role="columnheader" aria-label="Estado" scope="col"><span class="ui-column-title">Estado</span></th></tr></thead><tbody id="frmBusquedaPublica:j_idt127_data" class="ui-datatable-data ui-widget-content"><tr data-ri="0" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell" style="text-align:center;">1</td><td role="gridcell">DELGADO </td><td role="gridcell">MARIA ROCIO DE LOS ANGELES</td><td role="gridcell" style="text-align:center;">0400558862</td><td role="gridcell" style="text-align:center;">64</td><td role="gridcell">Jefe(a) de NÚCLEO  </td><td role="gridcell">Válido</td></tr><tr data-ri="1" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell" style="text-align:center;">1</td><td role="gridcell">MARTINEZ DELGADO</td><td role="gridcell">NANCY MIREYA</td><td role="gridcell" style="text-align:center;">17XXXXXXXX</td><td role="gridcell" style="text-align:center;">35</td><td role="gridcell">Hijo(a)       </td><td role="gridcell">Válido</td></tr><tr data-ri="2" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell" style="text-align:center;">1</td><td role="gridcell">MARTINEZ DELGADO</td><td role="gridcell">CRISTHIAN ANTONIO</td><td role="gridcell" style="text-align:center;">17XXXXXXXX</td><td role="gridcell" style="text-align:center;">25</td><td role="gridcell">Hijo(a)       </td><td role="gridcell">Válido</td></tr></tbody></table></div></div><script id="frmBusquedaPublica:j_idt127_s" type="text/javascript">$(function(){PrimeFaces.cw("DataTable","widget_frmBusquedaPublica_j_idt127",{id:"frmBusquedaPublica:j_idt127",groupColumnIndexes:[],disableContextMenuIfEmpty:false});});</script><button id="frmBusquedaPublica:j_idt142" name="frmBusquedaPublica:j_idt142" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="" style="margin-top: 1.2em; " type="submit"><span class="ui-button-text ui-c">Nueva consulta</span></button><script id="frmBusquedaPublica:j_idt142_s" type="text/javascript">$(function(){PrimeFaces.cw("CommandButton","widget_frmBusquedaPublica_j_idt142",{id:"frmBusquedaPublica:j_idt142"});});</script></div></div><script id="frmBusquedaPublica:j_idt87_s" type="text/javascript">$(function(){PrimeFaces.cw("Panel","widget_frmBusquedaPublica_j_idt87",{id:"frmBusquedaPublica:j_idt87"});});</script>
+                        </div>
+                </div>
+            </section><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="3195813043666579893:8883228287248158843" autocomplete="off" />
+</form><div id="presentarModalInconsistenciaRC" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container"><div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"><span id="presentarModalInconsistenciaRC_title" class="ui-dialog-title">Persona(s) con inconsistencia en datos del Registro Civil.</span></div><div class="ui-dialog-content ui-widget-content" id="presentarModalInconsistenciaRC_content">
+<form id="frmInconsistencias" name="frmInconsistencias" method="post" action="/pages/publico/busquedaPublica.jsf" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="frmInconsistencias" value="frmInconsistencias" />
+<label style="background: transparent;text-align: justify; color: #045491"></label><table id="frmInconsistencias:j_idt146" class="ui-panelgrid ui-widget sinbordes" style="width:100%;" role="grid"><tbody><tr class="ui-widget-content ui-panelgrid-even" role="row"><td role="gridcell" class="ui-panelgrid-cell" style="text-align:center;"><button id="frmInconsistencias:j_idt149" name="frmInconsistencias:j_idt149" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="PF('presentarModalInconsistenciaRC').hide();;window.open('\/pages\/publico\/busquedaPublica.jsf','_self')"><span class="ui-button-text ui-c">Ok</span></button><script id="frmInconsistencias:j_idt149_s" type="text/javascript">$(function(){PrimeFaces.cw("Button","widget_frmInconsistencias_j_idt149",{id:"frmInconsistencias:j_idt149"});});</script></td></tr></tbody></table><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="3195813043666579893:8883228287248158843" autocomplete="off" />
+</form></div></div><script id="presentarModalInconsistenciaRC_s" type="text/javascript">$(function(){PrimeFaces.cw("Dialog","presentarModalInconsistenciaRC",{id:"presentarModalInconsistenciaRC",resizable:false,modal:true});});</script><div id="j_idt150"></div><script id="j_idt150_s" type="text/javascript">$(function(){PrimeFaces.cw("AjaxStatus","widget_j_idt150",{id:"j_idt150",delay:0,start:function(){PF('statusDialog').show()},success:function(){PF('statusDialog').hide()}});});</script><div id="j_idt151" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container" style="background: transparent;"><div class="ui-dialog-content ui-widget-content" id="j_idt151_content">
+            <center><img src="../../resources/img/wait.gif" style="width:30px;" />
+            </center></div></div><script id="j_idt151_s" type="text/javascript">$(function(){PrimeFaces.cw("Dialog","statusDialog",{id:"j_idt151",draggable:false,resizable:false,modal:true});});</script><div id="dlgInformacion" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container"><div class="ui-dialog-content ui-widget-content" id="dlgInformacion_content">
+<form id="j_idt155" name="j_idt155" method="post" action="/pages/publico/busquedaPublica.jsf" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt155" value="j_idt155" />
+
+                <div class="w3-row">
+                    <div>
+                        <div class="w3-col m4 "><img src="/resources/img/LOGOs_Escudo.png" style="width:90%;" />
+                        </div>
+                        <div class="w3-col  m4  " style="font-size: 1px;">
+                            .
+                        </div>
+                        <div class="w3-col m3 " style="text-align: right; font-size: 1px;">
+                            .<!--&lt;h:graphicImage url="/resources/img/comunicado.jpeg" style="width:90%;"/&gt;-->
+                        </div>
+                        <div class="w3-col  m1  " style="text-align: right;"><button id="j_idt155:j_idt159" name="j_idt155:j_idt159" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="PrimeFaces.bcn(this,event,[function(event){PF('dlgInformacion').hide();},function(event){PrimeFaces.ab({s:&quot;j_idt155:j_idt159&quot;,f:&quot;j_idt155&quot;});return false;}]);" title="Cerrar" type="submit"><span class="ui-button-text ui-c">X</span></button><script id="j_idt155:j_idt159_s" type="text/javascript">$(function(){PrimeFaces.cw("CommandButton","widget_j_idt155_j_idt159",{id:"j_idt155:j_idt159"});});</script>
+                        </div>
+                    </div>
+                </div>
+<!--                &lt;div class="w3-row" style="background-image: url('/SIIRS_Web/resources/img/Logo.png'); background-repeat: no-repeat; background-position-y: 10em; background-position-x: -2em;"&gt;
+                    &lt;div class="w3-row" style="background-image: url('/SIIRS_Web/resources/img/escudo-transparencia-20.png'); background-repeat: no-repeat; background-position-y: 10em; background-position-x: -2em;"&gt;
+                &lt;/div&gt;-->
+                <div style="text-align: justify; margin:4em; ">
+                    <p style="font-size: 1.7em; text-align: center;">
+                        <strong>  ¡Recuerda! </strong>
+                    </p>
+                    <p>
+                        Llenar el formulario de registro social,
+                    </p>
+                    <p>
+                        <strong>  NO ES OBLIGATORIO </strong>
+                    </p>
+                    <p>
+                        Esta información ayuda a la Senescyt a mejorar su proceso de admisión y a promover una educación inclusiva.
+                    </p>
+                    <p>
+                        De verificarse inconsistencias en la información brindada, puede ser excluido de ser beneficiario de políticas, programas y/o subsidios estatales.
+                    </p>
+
+
+
+                </div>
+                <div>
+                    <div class="w3-col m3 "><img src="/resources/img/LOGOs_URS.png" style="width:180%;" />
+                    </div>
+                    <div class="w3-col m4 " style="font-size: 1px;">
+                        .
+                    </div>
+                    <!--                        &lt;div class="w3-col m5 "&gt;
+                                                &lt;h:graphicImage url="/resources/img/logotipos-gubernamentales.png" style="width:90%;"/&gt;
+                                            &lt;/div&gt;-->
+                </div>
+
+                <div style="text-align: right;"><button id="j_idt155:j_idt163" name="j_idt155:j_idt163" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="PrimeFaces.bcn(this,event,[function(event){PF('dlgInformacion').hide();},function(event){PrimeFaces.ab({s:&quot;j_idt155:j_idt163&quot;,f:&quot;j_idt155&quot;});return false;}]);" title="Cerrar" type="submit"><span class="ui-button-text ui-c">Cerrar</span></button><script id="j_idt155:j_idt163_s" type="text/javascript">$(function(){PrimeFaces.cw("CommandButton","widget_j_idt155_j_idt163",{id:"j_idt155:j_idt163"});});</script>
+                </div><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="3195813043666579893:8883228287248158843" autocomplete="off" />
+</form></div></div><script id="dlgInformacion_s" type="text/javascript">$(function(){PrimeFaces.cw("Dialog","dlgInformacion",{id:"dlgInformacion",resizable:false,modal:true,width:"50%"});});</script><div id="dlgInformacionFake" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container"><div class="ui-dialog-content ui-widget-content" id="dlgInformacionFake_content">
+            <div style="width:500px;">
+                <a href="https://forms.gle/7r9i9fmK8nixJHEXA"><img src="/resources/img/encuesta.jpeg" style="width:100%" />
+                </a>
+            </div></div><div class="ui-dialog-footer ui-widget-content"><span>
+                    <center>
+<form id="j_idt169" name="j_idt169" method="post" action="/pages/publico/busquedaPublica.jsf" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt169" value="j_idt169" />
+<button id="j_idt169:j_idt170" name="j_idt169:j_idt170" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-flat p-mr-2" onclick="PrimeFaces.ab({s:&quot;j_idt169:j_idt170&quot;,f:&quot;j_idt169&quot;,p:&quot;j_idt169:j_idt170&quot;,onco:function(xhr,status,args,data){PF('dlgInformacionFake').hide();;}});return false;" type="submit"><span class="ui-button-text ui-c">Cancelar</span></button><script id="j_idt169:j_idt170_s" type="text/javascript">$(function(){PrimeFaces.cw("CommandButton","widget_j_idt169_j_idt170",{id:"j_idt169:j_idt170"});});</script><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="3195813043666579893:8883228287248158843" autocomplete="off" />
+</form>
+                    </center></span></div></div><script id="dlgInformacionFake_s" type="text/javascript">$(function(){PrimeFaces.cw("Dialog","dlgInformacionFake",{id:"dlgInformacionFake",resizable:false,modal:true,closeOnEscape:true});});</script>
+                    <br /> <br /> <br />
+                </div>
+            </div>
+            <div id="sidebar1" class="btn-flotante" style="text-decoration: none !important;">
+                <div class="toggle-btn">
+                    <span>X</span>
+                </div>
+                <a href="https://www.registrosocial.gob.ec/" style="text-decoration: none !important;"><img src="/resources/img/boton.png" style="width: 99%;" />
+                </a>
+            </div>
+            
+            <!-- Sidebar MENU-->
+            <div id="sidebar">
+                <div class="inner">
+                    <!-- Contactenos -->
+	<div id="footer">
+		Derechos Reservados © 2021 | Unidad del Registro Social
+		<br />Dirección: Av. Atahualpa OE1-109 y 10 de Agosto / Quito - Ecuador
+		<br />Telf:+593 2 3834023 / Código Postal: 170508 
+	</div>
+                </div>
+            </div>
+        </div>
+        <script src="/resources/js/template2/boton.js" type="text/javascript"></script></body>
+</html>

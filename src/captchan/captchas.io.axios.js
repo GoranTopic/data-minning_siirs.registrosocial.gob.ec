@@ -24,8 +24,7 @@ const captcha_solver = async (url, sitekey, token, options={}) => {
     if(!proxy) proxy = null;
     if(!proxytype) proxytype = null;
 
-
-
+    // make the query string
     let querying = `${submitEndpoint}?key=${token}&googlekey=${sitekey}&method=userrecaptcha` + (proxy? `&proxy=${proxy}` : '') + (proxytype? `&proxytype=${proxytype}` : '') + `&pageurl=${url}`;
     debug && console.log('[captcha.io] querying url:', querying);
 	// get the response from 2captcha
