@@ -1,34 +1,20 @@
 import fs from 'fs';
 import Checklist from 'checklist-js';
-import { chromium } from 'playwright';
-//import captchanSolver from './captchan/captchas.io.exploit.js';
-import captchanSolver from './captchan/captchas.io.js';
+import axios from 'axios';
+import captchanSolver from './captchan/captchas.io.axios.js';
 import { KeyValueStore } from 'crawlee';
 import parseTables from './parsers/parseTables.js';
-import generateToken from './utils/generateToken.js';
-
+import ProxyRotator from 'proxy-rotator-js'
 import dotenv from 'dotenv';
 dotenv.config();
-//import parsteTable from './parser/parseTable.js';
 
 // get the enviroment variables
 let twoCaptchaApiKey = process.env.CAPTCHA_SOLVER_API_KEY;
 let domain = 'https://siirs.registrosocial.gob.ec/pages/publico/busquedaPublica.jsf'
+let siteKey = '6LduoHoaAAAAAIydB9j8ldHtqeuHnPfiSgSDeVfZ'
 
-// launch playwrigth
-const browser = await chromium.launch({
-	headless: false,
-	slowMo: 50,
-});
-
-// make a new context
-let context = await browser.newContext()
-
-// get the context request
-let contextRequets = context.request;
-
-// open a new page
-const page = await context.newPage();
+// create proxy rotator
+let proxies = new ProxyRotator( './storage/proxies/proxyscrape_premium_http_proxies.txt');
 
 // numeros
 let number = '03';
@@ -50,6 +36,20 @@ let ckls = new Checklist(cedulas, {
 // get new cedula
 let cedula = ckls.next();
 
+// make eqeust to get cookie and javax.faces.ViewState
+let response = await axios.get(domain);
+console.log('response: ', response);
+
+/*
+// solve captchan
+let result = await captchanSolver(domain, siteKey, twoCaptchaApiKey, { 
+    debug: true,
+    proxy: proxies.next(),
+    proxytype: 'http'
+});
+console.log('captcha solved: ', result);
+
+/*
 // send cedula to slave
 while (cedula) {
 	// go to the domain

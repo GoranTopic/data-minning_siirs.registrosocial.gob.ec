@@ -9,7 +9,6 @@ slavery({
     port : 3000,
 }).master(async master => {
     // number
-    
     let cedula_prefix = process.argv[2];
     // let get the phone number from the params passed
     console.log('reading cedulas starting with: ', cedula_prefix);
