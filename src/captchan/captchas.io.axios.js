@@ -17,7 +17,7 @@ const captcha_solver = async (url, sitekey, token, options={}) => {
     
     // default values
     if(!checkEvery) checkEvery = 5; // seconds
-    if(!timeout) timeout = 700; // seconds
+    if(!timeout) timeout = 800; // seconds
     if(!submitEndpoint) submitEndpoint = 'https://api.captchas.io/in.php'
     if(!checkEndpoint) checkEndpoint = 'https://api.captchas.io/res.php'
     if(!debug) debug = false;
@@ -38,7 +38,7 @@ const captcha_solver = async (url, sitekey, token, options={}) => {
 	// if we got a null ID, then we have an error
 	if (captchaID === null){
         console.error('[captcha.io] Error getting captcha ID');
-        return false
+        throw new Error('Error getting captcha ID');
     }
 
     // check if captcha is solved every 5 seconds
@@ -51,23 +51,23 @@ const captcha_solver = async (url, sitekey, token, options={}) => {
         debug && console.log('[captcha.io] checking captcha:', timeWaited, 'seconds');
         // check if captcha is solved
         const captchaResponse = await axios.get(`${checkEndpoint}?key=${token}&action=get&id=${captchaID}`);
-        console.log('[captcha.io] captchaResponse:', captchaResponse.data);
+        debug && console.log('[captcha.io] captchaResponse:', captchaResponse.data);
         // if captcha is solved, then break the loop
         if (captchaResponse.data.includes('OK')) {
             captchaToken = captchaResponse.data.split('|')[1];
             if(captchaToken === '') {
                 debug && console.error('[captcha.io] Captcha is empty');
-                return false
+                throw new Error('Captcha is empty');
             }
             debug && console.log('[captcha.io] captchaToken:', captchaToken);
             break;
         }else if (captchaResponse.data.includes('ERROR_CAPTCHA_UNSOLVABLE')) {
             debug && console.error('[captcha.io] Captcha is unsolvable');
-            return false
+            throw new Error('Captcha is unsolvable');
         }
         if(timeWaited > timeout) {
             debug && console.error('[captcha.io] Captchan timeout');
-            return false
+            throw new Error('Captcha timeout');
         }
     }
 
