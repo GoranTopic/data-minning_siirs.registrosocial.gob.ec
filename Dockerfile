@@ -10,6 +10,8 @@ COPY package*.json ./
 
 RUN npm install
 
+RUN npx playwright install-deps
+
 # Bundle app source
 COPY . .
 
