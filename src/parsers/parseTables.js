@@ -25,7 +25,8 @@ const parseTables = htmlContent => {
                 let rowText = $(row).text();
                 let key = rowText.split(':')[0];
                 let value = rowText.split(':')[1];
-                data[key] = value;
+                if(key !== 'Nueva Consulta$(function(){PrimeFaces.cw("CommandButton","widget_frmBusquedaPublica_j_idt83",{id')
+                    data[key] = value;
             }
         });
         // parse the familia data
