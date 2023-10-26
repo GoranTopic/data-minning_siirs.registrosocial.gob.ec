@@ -23,11 +23,10 @@ slavery({
         .split('\n');
     // open the key value store
     const store = await KeyValueStore.open(`siirs_${cedula_prefix}`);
-    // make directory
-    fs.mkdirSync(`./storage/checklist/cedulas_${cedula_prefix}`, { recursive: true });
     // create checklist
     let checklist = new Checklist(cedulas, { 
-        path: `./storage/checklist/cedulas_${cedula_prefix}`,
+        path: './storage/checklist/',
+        name: `cedulas_${cedula_prefix}`,
     });
     // get new cedula
     let cedula = checklist.next();

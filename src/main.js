@@ -17,7 +17,7 @@ let siteKey = '6LduoHoaAAAAAIydB9j8ldHtqeuHnPfiSgSDeVfZ'
 slavery({
     host: 'localhost', // '192.168.50.239',
     port : 3000,
-    numberOfSlaves: 100,
+    numberOfSlaves: 2,
 }).master(async master => {
     // get which cedulas we are reading from
     let cedula_prefix = process.argv[2];
@@ -33,12 +33,17 @@ slavery({
     let cedulas = fs.readFileSync(`./storage/cedulas/cedulas_${cedula_prefix}.txt`, 'utf8')
         .split('\n');
     // open the key value store
+    console.log(`opening key value store: siirs_${cedula_prefix}`);
     const store = await KeyValueStore.open(`siirs_${cedula_prefix}`);
+    console.log(`key value store opened: siirs_${cedula_prefix}`);
     // make directory
-    fs.mkdirSync(`./storage/checklist/cedulas_${cedula_prefix}`, { recursive: true });
+    try{
+        fs.mkdirSync(`./storage/checklists`);
+    }catch(e){}
     // create checklist
     let checklist = new Checklist(cedulas, { 
-        path: `./storage/checklist/cedulas_${cedula_prefix}`,
+        path: './storage/checklists/',
+        name: `cedulas_${cedula_prefix}`,
     });
     // get new cedula
     let cedula = checklist.next();
@@ -60,7 +65,14 @@ slavery({
     }
 }).slave( async ({ proxy, cedula }, slave ) => {
     // make eqeust to get cookie and javax.faces.ViewState
-    let response = await axios.get(domain);
+    console.log(`making request to ${domain} with proxy ${proxy}`);
+    let response = await axios.get(domain, {
+        proxy: {
+            protocol: 'http',
+            host: proxy.split(':')[0],
+            port: proxy.split(':')[1],
+        },
+    });
 
     // get the javax.faces.ViewState
     let javax_faces_ViewState = response.data
@@ -70,7 +82,7 @@ slavery({
 
     // solve captchan
     let token = await captchanSolver(domain, siteKey, process.env.CAPTCHA_SOLVER_API_KEY, { 
-        debug: false,
+        debug: true,
         proxy: proxy,
         proxytype: 'http'
     });
@@ -90,8 +102,12 @@ slavery({
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cookie': response.headers['set-cookie'][0],
+        }, // add the proxy to the axios request
+        proxy: {
+            protocol: 'http',
+            host: proxy.split(':')[0],
+            port: proxy.split(':')[1],
         },
-        //proxy: proxies.next(),
     });
 
     let data = parseTables(response.data);

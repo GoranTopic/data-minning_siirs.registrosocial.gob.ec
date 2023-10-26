@@ -23,6 +23,7 @@ const captcha_solver = async (url, sitekey, token, options={}) => {
     if(!debug) debug = false;
     if(!proxy) proxy = null;
     if(!proxytype) proxytype = null;
+    console.log('[captcha.io] options:', options);
 
     // make the query string
     let querying = `${submitEndpoint}?key=${token}&googlekey=${sitekey}&method=userrecaptcha` + (proxy? `&proxy=${proxy}` : '') + (proxytype? `&proxytype=${proxytype}` : '') + `&pageurl=${url}`;
