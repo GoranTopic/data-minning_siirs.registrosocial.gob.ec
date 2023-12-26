@@ -1,5 +1,5 @@
 import axios from 'axios';
-import captchanSolver from './captchan/captchas.io.axios.js';
+import captchanSolver from './captchan/capmonster.js';
 import dotenv from 'dotenv';
 import parseTables from './parsers/parseTables.js';
 import slavery from 'slavery-js';
@@ -13,11 +13,17 @@ let siteKey = '6LduoHoaAAAAAIydB9j8ldHtqeuHnPfiSgSDeVfZ'
 slavery({
     host: 'localhost', // '192.168.50.239',
     port : 3000,
-    numberOfSlaves: 100,
+    numberOfSlaves: 1,
 }).slave( async ({ proxy, cedula }, slave ) => {
     // make eqeust to get cookie and javax.faces.ViewState
-    let response = await axios.get(domain);
-
+    console.log(`making request to ${domain} ${ proxy? 'with proxy: ' + proxy : 'without proxy' }`);
+    let response = await axios.get(domain, { // commented out proxy
+        proxy:  proxy ? {
+            protocol: 'http',
+            host: proxy.split(':')[0],
+            port: proxy.split(':')[1],
+        } : undefined,
+    })
     // get the javax.faces.ViewState
     let javax_faces_ViewState = response.data
         .match(/id="j_id1:javax.faces.ViewState:0" value="(.*)"/)[1]    
@@ -26,11 +32,8 @@ slavery({
 
     // solve captchan
     let token = await captchanSolver(domain, siteKey, process.env.CAPTCHA_SOLVER_API_KEY, { 
-        debug: false,
-        proxy: proxy,
-        proxytype: 'http'
+        debug: true,
     });
-
     // genreate fake proxy
     //let token = generateToken();
 
@@ -46,8 +49,12 @@ slavery({
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cookie': response.headers['set-cookie'][0],
-        },
-        //proxy: proxies.next(),
+        }, // add the proxy to the axios request
+        proxy:  proxy ? {
+            protocol: 'http',
+            host: proxy.split(':')[0],
+            port: proxy.split(':')[1],
+        } : undefined,
     });
 
     let data = parseTables(response.data);
@@ -57,5 +64,3 @@ slavery({
 
     return { cedula, data };
 });
-
-

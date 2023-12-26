@@ -22,10 +22,16 @@ slavery({
     let cedulas = fs.readFileSync(`./storage/cedulas/cedulas_${cedula_prefix}.txt`, 'utf8')
         .split('\n');
     // open the key value store
+    console.log(`opening key value store: siirs_${cedula_prefix}`);
     const store = await KeyValueStore.open(`siirs_${cedula_prefix}`);
+    console.log(`key value store opened: siirs_${cedula_prefix}`);
+    // make directory
+    try{
+        fs.mkdirSync(`./storage/checklists`);
+    }catch(e){}
     // create checklist
     let checklist = new Checklist(cedulas, { 
-        path: './storage/checklist/',
+        path: './storage/checklists/',
         name: `cedulas_${cedula_prefix}`,
     });
     // get new cedula
@@ -35,7 +41,7 @@ slavery({
         let slave = await master.getIdle();
         // run the slave with the cedula and proxy
         let result = slave.run({ 
-            proxy: proxies.next(),
+            proxy: null, //proxies.next(),
             cedula: checklist.next(),
         }).then( async ({ cedula, data }) =>  {
             console.log(`${cedula}: `, data);
